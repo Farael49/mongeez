@@ -12,6 +12,7 @@
 
 package org.mongeez;
 
+import com.mongodb.MongoClient;
 import org.mongeez.commands.ChangeSet;
 import org.mongeez.commands.Script;
 import org.mongeez.reader.ChangeSetFileProvider;
@@ -33,7 +34,7 @@ import java.util.List;
 public class Mongeez {
     private final static Logger logger = LoggerFactory.getLogger(Mongeez.class);
 
-    private Mongo mongo = null;
+    private MongoClient mongo = null;
     private String dbName;
     private MongoAuth auth = null;
     private ChangeSetFileProvider changeSetFileProvider = null;
@@ -75,7 +76,7 @@ public class Mongeez {
         }
     }
 
-    public void setMongo(Mongo mongo) {
+    public void setMongoClient(MongoClient mongo) {
         this.mongo = mongo;
     }
 

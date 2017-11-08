@@ -34,11 +34,11 @@ public class MongeezDao {
     private DB db;
     private List<ChangeSetAttribute> changeSetAttributes;
 
-    public MongeezDao(Mongo mongo, String databaseName) {
+    public MongeezDao(MongoClient mongo, String databaseName) {
         this(mongo, databaseName, null);
     }
 
-    public MongeezDao(Mongo mongo, String databaseName, MongoAuth auth) {
+    public MongeezDao(MongoClient mongo, String databaseName, MongoAuth auth) {
         final List<MongoCredential> credentials = new LinkedList<MongoCredential>();
 
         if (auth != null) {
@@ -47,10 +47,10 @@ public class MongeezDao {
             } else {
                 credentials.add(MongoCredential.createCredential(auth.getUsername(), auth.getAuthDb(), auth.getPassword().toCharArray()));
             }
+            mongo = new MongoClient(mongo.getServerAddressList(), credentials);
         }
 
-        final MongoClient client = new MongoClient(mongo.getServerAddressList(),  credentials);
-        db = client.getDB(databaseName);
+        db = mongo.getDB(databaseName);
         configure();
     }
 
